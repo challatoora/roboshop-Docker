@@ -6,6 +6,27 @@ services:
     container_name: catalogue
     depends_on:
     - mongodb
+
+  user:
+    build: ./user
+    image: challatoor/user:1.0.0
+    container_name: user
+    depends_on:
+    - redis
+    
+
+  frontend:
+    build: ./frontend
+    image: challatoor/frontend:1.0.0
+    container_name: frontend
+    ports:
+    - "80:80"
+    depends_on:
+    - catalogue
+    - user
+    
+
+
   mongodb:
     build: ./mongodb # it moves to mongodb directory
     image: challatoor/mongodb:1.0.0 # docker build -t joindevops/mongodb:1.0.0
